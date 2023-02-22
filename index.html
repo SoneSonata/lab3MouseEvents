@@ -6,10 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 3:Mouse Events</title>
     <style>
+        body {
+            text-align: center;
+            transition: all .5s ease-in-out;
+        }
 
+        h1 {
+            
+        }
+
+        @keyframes disco {
+            0% {
+                color: red;
+            }
+
+            25% {
+                color: yellow;
+            }
+
+            50% {
+                color: green;
+            }
+
+            75% {
+                color: cyan;
+            }
+
+            100% {
+                color: blue;
+            }
+        }
+
+        .disco {
+            background-color: #333;
+            animation: disco 1s linear infinite;
+        }
     </style>
 </head>
 <body>
-    <h2>Click Anywhere!</h2>
+    <button id="disco">Party Time?</button>
+    <div class="orb">
+        
+    </div>
+    <h1>Click Anywhere!</h1>
+
+
+    <script>
+        let party = document.getElementById('disco');
+
+        party.addEventListener('click', partyTime);
+
+        function partyTime(e) {
+            e.target.parentNode.classList.toggle('disco');
+        }
+    </script>
 </body>
 </html>
