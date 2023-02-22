@@ -11,10 +11,6 @@
             transition: all .5s ease-in-out;
         }
 
-        h1 {
-            
-        }
-
         @keyframes disco {
             0% {
                 color: red;
@@ -37,27 +33,73 @@
             }
         }
 
+        @keyframes discoball {
+            0% {
+                background-color: red;
+            }
+
+            25% {
+                background-color: yellow;
+            }
+
+            50% {
+                background-color: green;
+            }
+
+            75% {
+                background-color: cyan;
+            }
+
+            100% {
+                background-color: blue;
+            }
+        }
+
         .disco {
             background-color: #333;
             animation: disco 1s linear infinite;
+        }
+
+        .disco div {
+            animation: discoball 1s linear infinite;
+        }
+
+        .orb {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            opacity: 0;
+            transition: all 1s;
         }
     </style>
 </head>
 <body>
     <button id="disco">Party Time?</button>
-    <div class="orb">
+    <div id="ball" class="orb">
         
     </div>
     <h1>Click Anywhere!</h1>
 
 
     <script>
+        let orb = document.getElementById('ball');
+        document.body.addEventListener('click', orbSpawn)
+
+        function orbSpawn(e) {
+            orb.style.transform = `translateY(${e.clientY - 25}px)`;
+            orb.style.transform += `translateX(${e.clientX - 25}px)`;
+            orb.style.opacity = .5;
+            console.log(e.clientX, e.clientY);
+        }
+
         let party = document.getElementById('disco');
 
         party.addEventListener('click', partyTime);
 
         function partyTime(e) {
             e.target.parentNode.classList.toggle('disco');
+            console.log(e);
         }
     </script>
 </body>
