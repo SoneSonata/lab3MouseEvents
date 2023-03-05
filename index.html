@@ -1,108 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 3:Mouse Events</title>
-    <style>
-        body {
-            text-align: center;
-            transition: all .5s ease-in-out;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        @keyframes disco {
-            0% {
-                color: red;
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lab 3:Mouse Events</title>
+        <style>
+            * {
+                box-sizing: border-box;
             }
 
-            25% {
-                color: yellow;
+            body {
+                text-align: center;
+                transition: all 0.5s ease-in-out;
+                height: 100vh;
+                width: 100vw;
+                /* the body margin is around 10px by default 
+                 setting to 0 reduced the ball offset. */
+                margin: 0;
             }
 
-            50% {
-                color: green;
+            @keyframes disco {
+                0% {
+                    color: red;
+                }
+
+                25% {
+                    color: yellow;
+                }
+
+                50% {
+                    color: green;
+                }
+
+                75% {
+                    color: cyan;
+                }
+
+                100% {
+                    color: blue;
+                }
             }
 
-            75% {
-                color: cyan;
+            @keyframes discoball {
+                0% {
+                    background-color: red;
+                }
+
+                25% {
+                    background-color: yellow;
+                }
+
+                50% {
+                    background-color: green;
+                }
+
+                75% {
+                    background-color: cyan;
+                }
+
+                100% {
+                    background-color: blue;
+                }
             }
 
-            100% {
-                color: blue;
-            }
-        }
-
-        @keyframes discoball {
-            0% {
-                background-color: red;
+            .disco {
+                background-color: #333;
+                animation: disco 1s linear infinite;
             }
 
-            25% {
-                background-color: yellow;
+            .disco div {
+                animation: discoball 1s linear infinite;
             }
 
-            50% {
-                background-color: green;
-            }
-
-            75% {
-                background-color: cyan;
-            }
-
-            100% {
+            .orb {
+                border-radius: 50%;
+                width: 100px;
+                height: 100px;
                 background-color: blue;
+                opacity: 0;
+                transition: all 1s;
             }
-        }
+        </style>
+    </head>
+    <body>
+        <!-- to keep the offset smaller, have the ball the first thing on the 
+        page / container -->
+        <div id="ball" class="orb"></div>
 
-        .disco {
-            background-color: #333;
-            animation: disco 1s linear infinite;
-        }
+        <button id="disco">Party Time?</button>
 
-        .disco div {
-            animation: discoball 1s linear infinite;
-        }
+        <h1>Click Anywhere!</h1>
 
-        .orb {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            background-color: blue;
-            opacity: 0;
-            transition: all 1s;
-        }
-    </style>
-</head>
-<body>
-    <button id="disco">Party Time?</button>
-    <div id="ball" class="orb">
-        
-    </div>
-    <h1>Click Anywhere!</h1>
+        <script>
+            let orb = document.getElementById("ball");
+            document.body.addEventListener("click", orbSpawn);
 
+            function orbSpawn(e) {
+                orb.style.transform = `translateY(${e.clientY - 50}px)`;
+                orb.style.transform += `translateX(${e.clientX - 50}px)`;
+                orb.style.opacity = 0.5;
+                console.log(e.clientX, e.clientY);
+            }
 
-    <script>
-        let orb = document.getElementById('ball');
-        document.body.addEventListener('click', orbSpawn)
+            let party = document.getElementById("disco");
 
-        function orbSpawn(e) {
-            orb.style.transform = `translateY(${e.clientY - 25}px)`;
-            orb.style.transform += `translateX(${e.clientX - 25}px)`;
-            orb.style.opacity = .5;
-            console.log(e.clientX, e.clientY);
-        }
+            party.addEventListener("click", partyTime);
 
-        let party = document.getElementById('disco');
-
-        party.addEventListener('click', partyTime);
-
-        function partyTime(e) {
-            e.target.parentNode.classList.toggle('disco');
-            console.log(e);
-        }
-    </script>
-</body>
+            function partyTime(e) {
+                // TB: This stops the click from continuing through the
+                //button and onto the body. This keeps the ball where it is.
+                //look it up.
+                e.stopPropagation();
+                e.target.parentNode.classList.toggle("disco");
+                console.log(e);
+            }
+        </script>
+    </body>
 </html>
